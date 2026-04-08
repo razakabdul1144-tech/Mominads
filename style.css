@@ -591,6 +591,8 @@ body {
     60% { transform: translateX(-50%) translateY(-5px) rotate(45deg); }
 }
 
+
+
 /* ===== SECTIONS ===== */
 .container {
     max-width: 1200px;
@@ -917,95 +919,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===== GALLERY SECTION ===== */
-.gallery {
-    padding: 6rem 0;
-    background: linear-gradient(135deg, var(--bg-light-secondary) 0%, var(--bg-light) 100%);
-    position: relative;
-    overflow: hidden;
-}
 
-.gallery::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    position: relative;
-    z-index: 2;
-}
-
-.gallery-item {
-    background: var(--bg-light);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    transition: var(--transition);
-    border: 1px solid var(--border-light);
-}
-
-.gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px var(--shadow-light);
-}
-
-.gallery-image {
-    position: relative;
-    overflow: hidden;
-    height: 250px;
-}
-
-.gallery-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-}
-
-.gallery-item:hover .gallery-image img {
-    transform: scale(1.1);
-}
-
-.gallery-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: var(--transition);
-}
-
-.gallery-item:hover .gallery-overlay {
-    opacity: 1;
-}
-
-.gallery-overlay i {
-    font-size: 2rem;
-    color: var(--primary-yellow);
-}
-
-.gallery-item h4 {
-    padding: 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    text-align: center;
-}
 
 /* ===== CONTACT SECTION ===== */
 .contact {
@@ -1126,6 +1040,23 @@ body {
 
 .form-group {
     margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.hidden-field {
+    display: none;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .form-group input,
@@ -1319,79 +1250,7 @@ body {
     box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
 }
 
-/* ===== LIGHTBOX ===== */
-.lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition);
-}
 
-.lightbox.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.lightbox-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 10001;
-}
-
-.lightbox img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: var(--border-radius);
-}
-
-.lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-}
-
-.lightbox-prev,
-.lightbox-next {
-    background: rgba(255, 215, 0, 0.8);
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    color: var(--primary-black);
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: var(--transition);
-    pointer-events: all;
-}
-
-.lightbox-prev:hover,
-.lightbox-next:hover {
-    background: var(--primary-yellow);
-    transform: scale(1.1);
-}
 
 /* ===== SCROLL ANIMATIONS ===== */
 .fade-in {

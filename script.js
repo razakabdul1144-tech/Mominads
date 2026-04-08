@@ -1,6 +1,4 @@
 // ===== GLOBAL VARIABLES =====
-let currentImageIndex = 0;
-let galleryImages = [];
 
 // ===== DOM CONTENT LOADED =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -14,7 +12,6 @@ function initializeApp() {
     initDarkMode();
     initNavigation();
     initScrollAnimations();
-    initGallery();
     initContactForm();
     initBackToTop();
     initSmoothScrolling();
@@ -153,7 +150,7 @@ function initScrollAnimations() {
     }, observerOptions);
     
     // Add animation classes to elements
-    const animatedElements = document.querySelectorAll('.about-card, .service-card, .gallery-item, .contact-item, .stat-item');
+    const animatedElements = document.querySelectorAll('.about-card, .service-card, .contact-item, .stat-item');
     animatedElements.forEach((element, index) => {
         element.classList.add('fade-in');
         element.style.animationDelay = `${index * 0.1}s`;
@@ -205,94 +202,32 @@ function animateCounter(statItem) {
     }, stepTime);
 }
 
-// ===== GALLERY LIGHTBOX =====
-function initGallery() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightbox-image');
-    const lightboxClose = document.querySelector('.lightbox-close');
-    const lightboxPrev = document.getElementById('lightboxPrev');
-    const lightboxNext = document.getElementById('lightboxNext');
-    
-    // Store gallery images
-    galleryImages = Array.from(galleryItems).map(item => {
-        const img = item.querySelector('img');
-        return {
-            src: img.src,
-            alt: img.alt
-        };
-    });
-    
-    // Add click event to gallery items
-    galleryItems.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            currentImageIndex = index;
-            openLightbox();
-        });
-    });
-    
-    // Lightbox controls
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightboxPrev.addEventListener('click', () => navigateLightbox(-1));
-    lightboxNext.addEventListener('click', () => navigateLightbox(1));
-    
-    // Close lightbox when clicking outside image
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            closeLightbox();
-        }
-    });
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (lightbox.classList.contains('active')) {
-            switch(e.key) {
-                case 'Escape':
-                    closeLightbox();
-                    break;
-                case 'ArrowLeft':
-                    navigateLightbox(-1);
-                    break;
-                case 'ArrowRight':
-                    navigateLightbox(1);
-                    break;
-            }
-        }
-    });
-    
-    function openLightbox() {
-        lightbox.classList.add('active');
-        updateLightboxImage();
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeLightbox() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-    
-    function navigateLightbox(direction) {
-        currentImageIndex += direction;
-        
-        if (currentImageIndex < 0) {
-            currentImageIndex = galleryImages.length - 1;
-        } else if (currentImageIndex >= galleryImages.length) {
-            currentImageIndex = 0;
-        }
-        
-        updateLightboxImage();
-    }
-    
-    function updateLightboxImage() {
-        const currentImage = galleryImages[currentImageIndex];
-        lightboxImage.src = currentImage.src;
-        lightboxImage.alt = currentImage.alt;
-    }
-}
+
 
 // ===== CONTACT FORM =====
 function initContactForm() {
     const contactForm = document.getElementById('contactForm');
+    const serviceSelect = document.getElementById('service');
+    const otherServiceGroup = document.getElementById('otherServiceGroup');
+    const otherServiceInput = document.getElementById('otherService');
+    
+    // Toggle other service field
+    serviceSelect.addEventListener('change', function() {
+        if (this.value === 'other') {
+            otherServiceGroup.style.display = 'block';
+            otherServiceInput.required = true;
+            otherServiceInput.focus();
+        } else {
+            otherServiceGroup.style.display = 'none';
+            otherServiceInput.required = false;
+        }
+    });
+    
+    // Restrict phone input to numeric digits only
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
     
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
