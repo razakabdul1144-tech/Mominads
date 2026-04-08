@@ -1675,6 +1675,25 @@ body.menu-open {
     }
 }
 
+/* ===== LARGE SCREENS (4K / 2560px+) ===== */
+@media (min-width: 2000px) {
+    :root {
+        font-size: 18px; /* Scales up all rem-based sizes */
+    }
+
+    .container {
+        max-width: 1600px;
+    }
+
+    .hero-content {
+        max-width: 1200px;
+    }
+
+    .hero-title {
+        font-size: clamp(4rem, 8vw, 8rem);
+    }
+}
+
 /* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
     * {
